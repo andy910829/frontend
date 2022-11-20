@@ -2,7 +2,7 @@
     <div class="title">小組資訊</div>
     <div class="display-groupinfo">小組ID:{{group_info.group_id}}</div>
     <div class="display-groupinfo">小組組長:{{group_info.leader}}</div>
-    <li v-for="n in count" class="display-groupinfo">小組組員:{{group_info.member_id[n-1]}}--{{group_info.member[n-1]}}</li>
+    <li v-for="n in count" class="display-groupinfo">小組組員:{{group_info.member_id[n-1]+" "}}{{group_info.member[n-1]}}</li>
 </template>
 
 <script>

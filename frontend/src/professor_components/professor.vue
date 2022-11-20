@@ -3,23 +3,21 @@
       <el-aside class="function-list">
           <div class="title">功能列表</div>
           <button class="function-bt" @click="status = 'group_info'">小組資訊</button>
-          <button class="function-bt" @click="status ='group_apply'">專題競賽申請</button>
-          <button class="function-bt" @click="status = 'interim_report'">期中報告</button>
+          <button class="function-bt" @click="status ='competition_apply'">專題競賽申請</button>
+          <button class="function-bt" @click="status = 'interm_report'">期中報告</button>
       </el-aside>
       <el-main class="main-display">
-          <group_apply v-if="status === 'group_apply'"/>
-          <interim_report v-else-if="status === 'interim_report'"/>
-          <competition_reg v-else-if="status === 'competition_reg'"/>
-          <group_info v-if="status === 'group_info'"/>
+        <group_info v-if="status === 'group_info'"/>
+        <interm_report v-if="status === 'interm_report'"/>
+        <competition_apply v-if="status === 'competition_apply'"/>
       </el-main>
   </el-container>
 </template>
 
 <script>
-import group_apply from "../student_components/group_apply.vue"
-import interim_report from "../student_components/interm_report.vue"
-import competition_reg from "../student_components/competition_reg.vue"
-import group_info from "../student_components/group_info.vue"
+import group_info from './group_info.vue'
+import interm_report from './interm_report.vue'
+import competition_apply from './competition_apply.vue'
 export default {
 data(){
   return{
@@ -27,10 +25,9 @@ data(){
   }
 },
 components:{
-  group_apply,
-  interim_report,
-  competition_reg,
-  group_info
+  group_info,
+  competition_apply,
+  interm_report
 }
 }
 </script>

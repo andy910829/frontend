@@ -39,7 +39,6 @@ export default {
       const path = import.meta.env.VITE_API + 'login' // 透過這個路徑傳回後端
       axios.post(path, { act: this.act, type: 'account' }) // 傳回後端axios.get(回傳路徑,回傳參數)
         .then(response => {
-          console.log(response.data)
           if(response.data.user){
             this.user_status = response.data.user
             if (this.user_status === "false") {
@@ -48,7 +47,6 @@ export default {
               }   // 儲存登入帳號的身分
               else if (this.user_status===true){
                 this.status = 'login_password'
-                console.log(this.status)
               }
             }
           else{
@@ -57,7 +55,7 @@ export default {
         })
     },
     register() {
-      sessionStorage.setItem("type", "register")
+      //sessionStorage.setItem("type", "register")
       this.$emit("register")
     },
     forgetpd() {
@@ -76,6 +74,7 @@ export default {
           if (response.data.user != "") {
             sessionStorage.setItem("user_account", response.data.user.account)
             sessionStorage.setItem("user_type", response.data.user.type)
+            sessionStorage.setItem("name",response.data.user.name)
             if (response.data.user.type === 'student') {
                 sessionStorage.setItem("group_id", response.data.user.group_id)
                 sessionStorage.setItem("user_identity", response.data.user.user_identity)

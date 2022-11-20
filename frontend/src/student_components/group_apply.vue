@@ -3,7 +3,8 @@
         <el-header class="title">申請加入名單</el-header>
         <el-main>
             <li v-for="apply in apply_list" class="apply-list">
-                申請人:{{apply}} 
+                學號:{{apply.id}}
+                姓名:{{apply.name}} 
                 <el-button type="success" @click="ans='accept', ans_apply(apply)">允許</el-button>
                 <el-button type="danger" @click="ans='reject', ans_apply(apply)" >拒絕</el-button>
             </li>
