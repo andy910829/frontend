@@ -13,7 +13,7 @@
       <br />
     </div>
   </div>
-  <group_detail v-if="status === 'group_detail'" :groupInfo="group" />
+  <group_detail v-if="status === 'group_detail'" :groupInfo="group" @backToLastPage="status=''"/>
 </template>
 
 <script>

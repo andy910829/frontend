@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button @click="backToLastPage" class="back-bt">上一頁</button>
     <div class="card">
       小組ID:{{ group.group_id }}<br />
       小組組長:{{ group.leader.student_id + " " }}{{ group.leader.name }}
@@ -71,6 +72,9 @@ export default {
           }
         });
     },
+    backToLastPage(){
+      this.$emit('backToLastPage')
+    }
   },
   created() {
     console.log(this.groupInfo);
@@ -79,6 +83,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.back-bt{
+  position: absolute;
+  text-align: center;
+  top:20px;
+  right:30px;
+  width:80px;
+  height:50px;
+  font-size: small;
+}
 .card {
   position: relative;
   margin-top: 30px;
