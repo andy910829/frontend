@@ -56,7 +56,8 @@ data(){
 
 .function-bt {
     position: relative;
-    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 5px;
     top: 100px;
     width: 100%;
     font-size: large;

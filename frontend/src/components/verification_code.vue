@@ -91,7 +91,7 @@ export default {
   border-radius: 20px;
   margin-bottom: 16px;
   text-align: center;
-  width: 225px;
+  width: 80%;
   height: 35px;
 }
 

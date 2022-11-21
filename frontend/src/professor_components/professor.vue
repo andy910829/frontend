@@ -107,9 +107,9 @@ export default {
 }
 .card {
   position: relative;
-  margin-top: 30px;
-  margin-left: 280px;
-  width: 500px;
+  margin-top: 5%;
+  left: 20%;
+  width: 55%;
   background-color: aliceblue;
 }
 .function-list {

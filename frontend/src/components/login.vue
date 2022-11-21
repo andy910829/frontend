@@ -113,7 +113,7 @@ export default {
   border-radius: 20px;
   margin-bottom: 30px;
   text-align: center;
-  width: 230px;
+  width: 80%;
   height: 27px;
 }
 .inputbox2{
@@ -121,7 +121,7 @@ export default {
   margin-top: 20px;
   margin-bottom: 50px;
   text-align: center;
-  width: 230px;
+  width: 80%;
   height: 27px;
 }
 

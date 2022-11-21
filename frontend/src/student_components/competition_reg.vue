@@ -159,8 +159,8 @@ export default {
 
 <style lang="scss" scoped>
 .selection {
-    position: absolute;
-    left: 41%;
+    position: relative;
+    left: 0%;
     border-radius: 20px;
     height: 30px;
     margin-top: 15px;
@@ -175,9 +175,9 @@ export default {
 .select {
     position: relative;
     border-radius: 20px;
-    width: 90%;
-    height: 110px;
-    left: 80px;
+    width: 70%;
+    height: 120px;
+    left: 15%;
     background-color: white;
     font-size: 15px;
     margin-bottom: 50px;
@@ -186,7 +186,7 @@ export default {
 .upload-box {
     position: relative;
     width: 85%;
-    left: 110px;
+    left: 10%;
     margin-bottom: 50px;
 }
 
@@ -197,8 +197,8 @@ export default {
 
 .input-box {
     position: absolute;
-    width: 250px;
-    left: 38%;
+    width: 40%;
+    left: 30%;
     margin-top: 10px;
 }
 .btn{

@@ -75,8 +75,8 @@ export default {
   border-radius: 20px;
   margin-bottom: 16px;
   text-align: center;
-  width: 230px;
-  height: 27px;
+  width: 80%;
+  height: 35px;
 }
 
 .loginbox {
@@ -99,8 +99,7 @@ export default {
   text-align: center;
   font-size: 35px;
   font-weight: 900;
-  top: 0px;
-  margin-bottom: 12%;
+  margin-bottom: 10%;
   justify-content: center;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.3);

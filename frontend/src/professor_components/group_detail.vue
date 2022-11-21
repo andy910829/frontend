@@ -95,8 +95,8 @@ export default {
 .card {
   position: relative;
   margin-top: 30px;
-  margin-left: 260px;
-  width: 500px;
+  left: 10%;
+  width: 70%;
   background-color: aliceblue;
 }
 </style>

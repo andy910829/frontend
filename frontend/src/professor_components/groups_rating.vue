@@ -6,14 +6,15 @@
   </select>
   <div v-for="GroupInfo in GroupList" :key="GroupInfo.group_id">
     <div class="card">
-      <div class="box-title">
-        小組ID:{{ GroupInfo.group_id
-        }}<el-button
+      <el-button
           class="send-bt"
           type="warning"
           @click="returnScore(GroupInfo)"
           >送出</el-button
         >
+      <div class="box-title">
+        小組ID:{{ GroupInfo.group_id
+        }}
       </div>
       <br />
       <div class="group-info">
@@ -103,11 +104,12 @@ export default {
 .group-info {
   position: relative;
   text-align: left;
+  left:10%;
 }
 .box-title {
   position: relative;
   text-align: left;
-  left: 0px;
+  left: 10%;
   font-size: large;
   font-weight: 500;
 }
@@ -118,22 +120,22 @@ export default {
 .card {
   position: relative;
   background-color: aliceblue;
-  margin-top: 20px;
-  left: 260px;
-  width: 500px;
+  margin-top: 10%;
+  left: 20%;
+  width: 55%;
   border-radius: 15px;
 }
 .send-bt {
   position: relative;
   border-radius: 20px;
-  margin-left: 290px;
+  left: 45%;
 }
 .score-box {
   position: absolute;
   text-align: center;
-  left: 250px;
-  width: 40px;
-  margin-left: 50px;
+  left: 30%;
+  width: 10%;
+  margin-left: 20%;
 }
 </style>
 
