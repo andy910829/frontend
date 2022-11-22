@@ -1,4 +1,7 @@
 <template>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/> 
+  </head>
   <div class="body">
     <login v-if="status === 'login'" @register="status = 'register'" @forgetpd="status = 'forgetpd'"/>
     <register v-else-if="status === 'register'" @already_signup="status = 'login'" @verification="status = 'verification'"/>

@@ -93,6 +93,7 @@ export default {
 </script>
 
 <style scoped>
+@media screen{
 .mg-bt {
   margin-bottom: 16px;
 }
@@ -150,5 +151,66 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.3);
+}}
+
+@media screen and (max-width:480px){
+  .mg-bt {
+  margin-bottom: 16px;
+}
+.mg-bt:hover{
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+}
+
+.fgpd-bt {
+  background-color: transparent;
+  border-width: 0;
+  outline: none;
+}
+.fgpd-bt:hover{
+  box-shadow: 10;
+}
+
+.inputbox {
+  border-radius: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+  width: 80%;
+  height: 27px;
+}
+.inputbox2{
+  border-radius: 20px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  text-align: center;
+  width: 80%;
+  height: 27px;
+}
+
+.loginbox {
+  border-radius: 20px;
+  display: flex;
+  background-color: white;
+  height: 50%;
+  width: 90%;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+}
+
+.login-head {
+  display: flex;
+  height: 25%;
+  border-radius: 20px 20px 0 0;
+  text-align: center;
+  font-size: 35px;
+  font-weight: 900;
+  top: 0px;
+  margin-bottom: 10%;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.3);
+}
 }
 </style>

@@ -7,9 +7,9 @@
                 <div class="el-upload__text">請先將檔案拖到此處，或<em>點選上傳</em></div>
                 <div class="el-upload__tip" slot="tip">只能上傳pdf檔案，一次只能上傳一個檔案</div>
             </el-upload>
-            <el-button type="success" @click="submit_file">上傳</el-button>
-            <el-button type="success" @click="get_file">下載期中報告</el-button>
-            <el-button type="success" @click="preview_file">預覽期中報告</el-button>
+            <el-button type="success" @click="submit_file" class="sm-bt">上傳</el-button>
+            <el-button type="success" @click="get_file" class="bt">下載期中報告</el-button>
+            <el-button type="success" @click="preview_file" class="bt">預覽期中報告</el-button>
         </el-main>
     </el-container>
 </template> 
@@ -102,8 +102,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media screen{
 .title {
     font-size: 35px;
     font-weight: 900;
+}}
+@media screen and (max-width: 480px){
+    .title {
+    font-size: 35px;
+    font-weight: 900;
+}
+.sm-bt{
+    position: relative;
+    width:25%;
+    margin-left:20%;
+    margin-top: 2%;
+}
+.bt{
+    position: relative;
+    margin-left:20%;
+    margin-top:5%;
+}
 }
 </style>

@@ -80,6 +80,7 @@ export default {
 </script>
   
 <style scoped>
+@media screen{
 .mg-tp {
   margin-top: 10px;
 }
@@ -123,5 +124,53 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.3);
+}}
+
+
+@media screen and (max-width: 480px){
+  .mg-tp {
+  margin-top: 10px;
+}
+
+.inputbox {
+  border-radius: 20px;
+  margin-bottom: 16px;
+  text-align: center;
+  width: 230px;
+  height: 30px;
+}
+.emailinputbox {
+  border-radius: 20px;
+  margin-bottom: 16px;
+  text-align: center;
+  width: 100px;
+  height: 30px;
+}
+
+.loginbox {
+  border-radius: 20px;
+  display: flex;
+  background-color: white;
+  height: 60%;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+}
+
+.login-head {
+  display: flex;
+  height: 15%;
+  border-radius: 20px 20px 0 0;
+  text-align: center;
+  font-size: 35px;
+  font-weight: 900;
+  top: 0px;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.3);
+}
 }
 </style>

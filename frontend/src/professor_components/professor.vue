@@ -75,6 +75,7 @@ export default {
 </script>
 
 <style scoped>
+@media screen{
 .title {
   display: flex;
   align-items: center;
@@ -118,5 +119,50 @@ export default {
   height: 90%;
   top: 10%;
   background: rgba(255, 255, 255, 0.5);
+}}
+@media screen and (max-width: 480px){
+.title {
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 10%;
+  font-size: 15px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 1);
+}
+.small-title{
+  font-size: 30px;
+  font-weight: 500;
+}
+.function-bt {
+  position: relative;
+  margin-bottom: 10px;
+  top: 100px;
+  width: 100%;
+  font-size: large;
+}
+.main-display {
+  position: absolute;
+  top: 5%;
+  left: 20%;
+  width: 80%;
+  height: 95%;
+  background: rgba(255, 255, 255, 0.7);
+}
+.card {
+  position: relative;
+  margin-top: 5%;
+  left: 10%;
+  width: 55%;
+  background-color: aliceblue;
+}
+.function-list {
+  position: absolute;
+  width: 20%;
+  height: 95%;
+  top: 5%;
+  background: rgba(255, 255, 255, 0.5);
+}
 }
 </style>

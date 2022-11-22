@@ -42,7 +42,6 @@ export default {
     changeStatus(groupInfo) {
       this.status = "group_detail";
       this.group = groupInfo;
-      console.log(this.group)
     },
   },
   created() {
@@ -52,11 +51,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media screen{
 .card {
   position: relative;
   margin-top: 30px;
   margin-left: 0px;
   width: 500px;
   background-color: aliceblue;
+}}
+@media screen and (max-width:480px){
+  .card {
+  position: relative;
+  margin-top: 5%;
+  left: 0px;
+  width: 90%;
+  background-color: aliceblue;
+}
 }
 </style>

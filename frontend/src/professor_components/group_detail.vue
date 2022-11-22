@@ -8,10 +8,8 @@
         小組組員:{{ member.student_id + " " }}{{ member.name }}
       </div>
     </div>
-    <el-button type="success" @click="get_file(group)">下載期中報告</el-button>
-    <el-button type="success" @click="preview_file(group)"
-      >預覽期中報告</el-button
-    >
+    <el-button type="success" @click="get_file(group)" class="download-bt">下載期中報告</el-button>
+    <el-button type="success" @click="preview_file(group)" class="download-bt"> 預覽期中報告 </el-button>
   </div>
 </template>
 
@@ -83,6 +81,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media screen{
 .back-bt{
   position: absolute;
   text-align: center;
@@ -98,5 +97,32 @@ export default {
   left: 10%;
   width: 70%;
   background-color: aliceblue;
+}
+.download-bt{
+  position: relative;
+  margin-top: 2%;
+}}
+@media screen and (max-width: 480px){
+  .back-bt{
+  position: absolute;
+  text-align: center;
+  top:20px;
+  right:30px;
+  width:20%;
+  height:5%;
+  font-size: 10%;
+}
+.card {
+  position: relative;
+  margin-top: 15%;
+  left: 5%;
+  width: 70%;
+  background-color: aliceblue;
+  align-items: left;
+}
+.download-bt{
+  position: relative;
+  margin-top: 5%;
+}
 }
 </style>

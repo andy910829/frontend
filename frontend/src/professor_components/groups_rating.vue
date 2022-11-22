@@ -18,7 +18,7 @@
       </div>
       <br />
       <div class="group-info">
-        小組組長:{{ GroupInfo.leader.student_id + " "
+        組長:{{ GroupInfo.leader.student_id + " "
         }}{{ GroupInfo.leader.name }}
           <input
             v-if="semester==='last_score'"
@@ -34,7 +34,7 @@
           />
       </div>
       <div v-for="member in GroupInfo.member" class="group-info">
-        小組組員:{{ member.student_id + " " }}{{ member.name }}
+        組員:{{ member.student_id + " " }}{{ member.name }}
           <input
           v-if="semester==='last_score'"
             placeholder="分數"
@@ -88,17 +88,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media screen{
 .menu {
   position: absolute;
   right: 50px;
   width: 70px;
   height: 40px;
+  top:2%;
 }
 .comment-box {
   position: relative;
   left: 0px;
   text-align: center;
-  width: 450px;
+  width: 50%;
   height: 50px;
 }
 .group-info {
@@ -120,7 +122,7 @@ export default {
 .card {
   position: relative;
   background-color: aliceblue;
-  margin-top: 10%;
+  margin-top: 5%;
   left: 20%;
   width: 55%;
   border-radius: 15px;
@@ -135,7 +137,63 @@ export default {
   text-align: center;
   left: 30%;
   width: 10%;
-  margin-left: 20%;
+  margin-left: 30%;
+}}
+
+
+@media screen and (max-width: 480px) {
+.menu {
+  position: absolute;
+  right: 2%;
+  width: 70px;
+  height: 40px;
+  top:2%;
+}
+.comment-box {
+  position: relative;
+  left: 0px;
+  text-align: center;
+  width: 50%;
+  height: 30px;
+}
+.group-info {
+  position: relative;
+  text-align: left;
+  left:0%;
+}
+.box-title {
+  position: relative;
+  text-align: left;
+  left: 0%;
+  font-size: large;
+  font-weight: 500;
+  top:0%;
+}
+.title {
+  font-size: 30px;
+  font-weight: 500;
+}
+.card {
+  position: relative;
+  background-color: aliceblue;
+  margin-top: 15%;
+  left: 0%;
+  width: 80%;
+  border-radius: 15px;
+}
+.send-bt {
+  position: absolute;
+  border-radius: 20px;
+  left: 75%;
+  top:13%;
+}
+.score-box {
+  position: absolute;
+  text-align: center;
+  left: 55%;
+  width: 20%;
+}
+  
 }
 </style>
 

@@ -54,6 +54,7 @@ export default {
 
   
 <style scoped>
+@media screen{
 .mg-tp {
   height: 35px;
   margin-top: 30px;
@@ -92,5 +93,47 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.3);
+}}
+
+
+@media screen and (max-width: 480px){
+  .mg-tp {
+  height: 35px;
+  margin-top: 30px;
+}
+
+.inputbox {
+  border-radius: 20px;
+  margin-bottom: 16px;
+  margin-top: 10%;
+  text-align: center;
+  width: 70%;
+  height: 10%;
+}
+
+.loginbox {
+  border-radius: 20px;
+  display: flex;
+  background-color: white;
+  height: 60%;
+  width: 80%;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+}
+
+.login-head {
+  display: flex;
+  height: 25%;
+  border-radius: 20px 20px 0 0;
+  text-align: center;
+  font-size: 35px;
+  font-weight: 900;
+  top: 0px;
+  margin-bottom: 10%;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.3);
+}
 }
 </style>

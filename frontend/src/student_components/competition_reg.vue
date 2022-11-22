@@ -58,7 +58,7 @@ export default {
             option1: 0,
             option2: 0,
             YT_link: "",
-            status: "",
+            status: "pass",
             detail: {},
             param: new FormData()
         }
@@ -158,6 +158,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media screen{
 .selection {
     position: relative;
     left: 0%;
@@ -208,5 +209,60 @@ export default {
 .word {
     font-size: large;
     font-weight: 900;
+}}
+@media screen and (max-width: 480px){
+    .selection {
+    position: relative;
+    left: 0%;
+    border-radius: 20px;
+    height: 20%;
+    width: 80%;
+    margin-top: 15px;
+    z-index: 999;
+}
+
+.title {
+    font-size: 35px;
+    font-weight: 900;
+}
+
+.select {
+    position: relative;
+    border-radius: 20px;
+    width: 90%;
+    height: 50%;
+    left: 5%;
+    background-color: white;
+    font-size: 15px;
+    margin-bottom: 50px;
+}
+
+.upload-box {
+    position: relative;
+    width: 85%;
+    left: 10%;
+    margin-bottom: 50px;
+}
+
+.submit-bt {
+    position: relative;
+    bottom: 20px;
+}
+
+.input-box {
+    position: relative;
+    width: 80%;
+    left: 0%;
+    justify-content: center;
+    margin-top: 10px;
+}
+.btn{
+    position: relative;
+    margin-top: 20px;
+}
+.word {
+    font-size: large;
+    font-weight: 900;
+}
 }
 </style>

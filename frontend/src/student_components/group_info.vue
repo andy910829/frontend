@@ -35,6 +35,7 @@ export default {
 </script>
 
 <style scoped>
+@media screen{
 .title {
     font-size: 35px;
     font-weight: 900;
@@ -53,5 +54,25 @@ export default {
     width: 50%;
     left:25%;
     background-color: aliceblue;
+}}
+@media screen and (max-width: 480px){
+    .title {
+    font-size: 35px;
+    font-weight: 500;
+}
+
+.display-groupinfo {
+    position: relative;
+    top: 30px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+    font-size: large;
+    font-weight: 500;
+    height: 10%;
+    width: 80%;
+    left:8%;
+    background-color: aliceblue;
+}
 }
 </style>
