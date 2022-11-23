@@ -90,9 +90,9 @@ export default {
 @media screen and (max-width: 480px) {
   .menu {
     position: absolute;
-    width: 15%;
-    height: 3%;
-    right: 2%;
+    width: 50px;
+    height: 25px;
+    right: 7%;
   }
   .card {
     position: relative;

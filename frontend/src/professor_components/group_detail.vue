@@ -3,13 +3,13 @@
     <button @click="backToLastPage" class="back-bt">上一頁</button>
     <div class="card">
       小組ID:{{ group.group_id }}<br />
-      小組組長:{{ group.leader.student_id + " " }}{{ group.leader.name }}
+      組長:{{ group.leader.student_id + " " }}{{ group.leader.name }}
       <div v-for="member in group.member">
-        小組組員:{{ member.student_id + " " }}{{ member.name }}
+        組員:{{ member.student_id + " " }}{{ member.name }}
       </div>
     </div>
-    <el-button type="success" @click="get_file(group)" class="download-bt">下載期中報告</el-button>
-    <el-button type="success" @click="preview_file(group)" class="download-bt"> 預覽期中報告 </el-button>
+    <el-button type="primary" @click="get_file(group)" class="download-bt">下載期中報告</el-button>
+    <el-button type="primary" @click="preview_file(group)" class="download-bt"> 預覽期中報告 </el-button>
   </div>
 </template>
 
@@ -86,15 +86,16 @@ export default {
   text-align: center;
   top:20px;
   right:30px;
-  width:80px;
-  height:50px;
-  font-size: large;
+  width:7%;
+  height:7%;
+  font-size: small;
 }
 .card {
   position: relative;
   margin-top: 30px;
-  left: 10%;
-  width: 70%;
+  align-items: center;
+  left:22%;
+  width: 50%;
   background-color: aliceblue;
 }
 .download-bt{
@@ -106,10 +107,11 @@ export default {
   position: absolute;
   text-align: center;
   top:2%;
-  right:30px;
+  right:5%;
   width:20%;
   height:5%;
-  font-size: 10%;
+  font-size: 10px;
+  font-weight: 500;
 }
 .card {
   position: relative;

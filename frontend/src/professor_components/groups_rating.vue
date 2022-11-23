@@ -6,47 +6,43 @@
   </select>
   <div v-for="GroupInfo in GroupList" :key="GroupInfo.group_id">
     <div class="card">
-      <el-button
+      <br />
+      <div class="group-info">
+        <div class="box-title">小組ID:{{ GroupInfo.group_id }}
+          <el-button
           class="send-bt"
           type="warning"
           @click="returnScore(GroupInfo)"
           >送出</el-button
-        >
-      <div class="box-title">
-        小組ID:{{ GroupInfo.group_id
-        }}
-      </div>
-      <br />
-      <div class="group-info">
-        組長:{{ GroupInfo.leader.student_id + " "
-        }}{{ GroupInfo.leader.name }}
-          <input
-            v-if="semester==='last_score'"
-            placeholder="分數"
-            class="score-box"
-            v-model="GroupInfo.leader.last_score"
-          />
-          <input
-            v-else-if="semester==='next_score'"
-            placeholder="分數"
-            class="score-box"
-            v-model="GroupInfo.leader.next_score"
-          />
+        ></div>
+        組長:{{ GroupInfo.leader.student_id + " " }}{{ GroupInfo.leader.name }}
+        <input
+          v-if="semester === 'last_score'"
+          placeholder="分數"
+          class="score-box"
+          v-model="GroupInfo.leader.last_score"
+        />
+        <input
+          v-else-if="semester === 'next_score'"
+          placeholder="分數"
+          class="score-box"
+          v-model="GroupInfo.leader.next_score"
+        />
       </div>
       <div v-for="member in GroupInfo.member" class="group-info">
         組員:{{ member.student_id + " " }}{{ member.name }}
-          <input
-          v-if="semester==='last_score'"
-            placeholder="分數"
-            class="score-box"
-            v-model="member.last_score"
-          />
-          <input
-          v-if="semester==='next_score'"
-            placeholder="分數"
-            class="score-box"
-            v-model="member.next_score"
-          />
+        <input
+          v-if="semester === 'last_score'"
+          placeholder="分數"
+          class="score-box"
+          v-model="member.last_score"
+        />
+        <input
+          v-if="semester === 'next_score'"
+          placeholder="分數"
+          class="score-box"
+          v-model="member.next_score"
+        />
       </div>
       <br />
       <input
@@ -61,7 +57,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   props: ["groupinfo"],
@@ -74,126 +70,128 @@ export default {
   },
   methods: {
     returnScore(groupInfo) {
-      const path = import.meta.env.VITE_API + 'set_score'
-      axios.post(path,{group_info:groupInfo,pro_name:sessionStorage.getItem('name')}).then(
-        response=>{
-          if(response.data.res === true){
-            this.$message.success('成績修改成功')
+      const path = import.meta.env.VITE_API + "set_score";
+      axios
+        .post(path, {
+          group_info: groupInfo,
+          pro_name: sessionStorage.getItem("name"),
+        })
+        .then((response) => {
+          if (response.data.res === true) {
+            this.$message.success("成績修改成功");
           }
-        }
-      )
+        });
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@media screen{
-.menu {
-  position: absolute;
-  right: 50px;
-  width: 70px;
-  height: 40px;
-  top:2%;
+@media screen {
+  .menu {
+    position: absolute;
+    right: 50px;
+    width: 70px;
+    height: 40px;
+    top: 2%;
+  }
+  .comment-box {
+    position: relative;
+    left: 0px;
+    text-align: center;
+    width: 50%;
+    height: 50px;
+  }
+  .group-info {
+    position: relative;
+    text-align: left;
+    height:100%;
+    left: 0%;
+  }
+  .box-title {
+    position: relative;
+    left: 0%;
+    font-size: large;
+    font-weight: 500;
+    margin-bottom: 5%;
+  }
+  .title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 500;
+    height:5%;
+  }
+  .card {
+    position: relative;
+    background-color: aliceblue;
+    left: 20%;
+    width: 50%;
+    border-radius: 15px;
+  }
+  .send-bt {
+    position: relative;
+    border-radius: 20px;
+    left: 48%;
+  }
+  .score-box {
+    position: absolute;
+    text-align: center;
+    left: 30%;
+    width: 10%;
+    margin-left: 30%;
+  }
 }
-.comment-box {
-  position: relative;
-  left: 0px;
-  text-align: center;
-  width: 50%;
-  height: 50px;
-}
-.group-info {
-  position: relative;
-  text-align: left;
-  left:10%;
-}
-.box-title {
-  position: relative;
-  text-align: left;
-  left: 10%;
-  font-size: large;
-  font-weight: 500;
-}
-.title {
-  font-size: 30px;
-  font-weight: 500;
-}
-.card {
-  position: relative;
-  background-color: aliceblue;
-  margin-top: 5%;
-  left: 20%;
-  width: 55%;
-  border-radius: 15px;
-}
-.send-bt {
-  position: relative;
-  border-radius: 20px;
-  left: 45%;
-}
-.score-box {
-  position: absolute;
-  text-align: center;
-  left: 30%;
-  width: 10%;
-  margin-left: 30%;
-}}
-
 
 @media screen and (max-width: 480px) {
-.menu {
-  position: absolute;
-  right: 2%;
-  width: 70px;
-  height: 40px;
-  top:2%;
-}
-.comment-box {
-  position: relative;
-  left: 0px;
-  text-align: center;
-  width: 50%;
-  height: 30px;
-}
-.group-info {
-  position: relative;
-  text-align: left;
-  left:0%;
-}
-.box-title {
-  position: relative;
-  text-align: left;
-  left: 0%;
-  font-size: large;
-  font-weight: 500;
-  top:0%;
-}
-.title {
-  font-size: 30px;
-  font-weight: 500;
-}
-.card {
-  position: relative;
-  background-color: aliceblue;
-  margin-top: 15%;
-  left: 0%;
-  width: 80%;
-  border-radius: 15px;
-}
-.send-bt {
-  position: absolute;
-  border-radius: 20px;
-  left: 75%;
-  top:13%;
-}
-.score-box {
-  position: absolute;
-  text-align: center;
-  left: 55%;
-  width: 20%;
-}
-  
+  .menu {
+    position: absolute;
+    right: 2%;
+    width: 70px;
+    height: 40px;
+    top: 2%;
+  }
+  .comment-box {
+    position: relative;
+    left: 0px;
+    text-align: center;
+    width: 50%;
+    height: 30px;
+  }
+  .group-info {
+    position: relative;
+    text-align: left;
+    left: 0%;
+  }
+  .box-title {
+    position: relative;
+    font-size: large;
+    font-weight: 500;
+    margin-bottom: 5%;
+  }
+  .title {
+    font-size: 30px;
+    font-weight: 500;
+    height:8%;
+  }
+  .card {
+    position: relative;
+    background-color: aliceblue;
+    left: 0%;
+    width: 80%;
+    border-radius: 15px;
+  }
+  .send-bt {
+    position: relative;
+    border-radius: 20px;
+    left: 13%;
+    margin-bottom: 5%;
+  }
+  .score-box {
+    position: absolute;
+    text-align: center;
+    left: 55%;
+    width: 20%;
+  }
 }
 </style>
 
