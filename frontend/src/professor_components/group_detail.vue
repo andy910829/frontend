@@ -75,7 +75,6 @@ export default {
     }
   },
   created() {
-    console.log(this.groupInfo);
   },
 };
 </script>
@@ -89,7 +88,7 @@ export default {
   right:30px;
   width:80px;
   height:50px;
-  font-size: small;
+  font-size: large;
 }
 .card {
   position: relative;
@@ -106,7 +105,7 @@ export default {
   .back-bt{
   position: absolute;
   text-align: center;
-  top:20px;
+  top:2%;
   right:30px;
   width:20%;
   height:5%;

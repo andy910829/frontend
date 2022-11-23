@@ -41,7 +41,7 @@
 </script>
 
 <style lang="scss" scoped>
-::v-deep .el-timeline-item__tail {
+:deep() .el-timeline-item__tail {
     position: absolute;
     left: 4px;
     height: 100%;
