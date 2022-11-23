@@ -21,10 +21,10 @@
         <div v-for="GroupInfo in GroupList" :key="GroupInfo.group_id">
           <div class="card" @click="changeStatus(GroupInfo)">
             小組ID:{{ GroupInfo.group_id }}<br />
-            小組組長:{{ GroupInfo.leader.student_id + " "
+            組長:{{ GroupInfo.leader.student_id + " "
             }}{{ GroupInfo.leader.name }}
             <div v-for="member in GroupInfo.member">
-              小組組員:{{ member.student_id + " " }}{{ member.name }}
+            組員:{{ member.student_id + " " }}{{ member.name }}
             </div>
           </div>
           <br />

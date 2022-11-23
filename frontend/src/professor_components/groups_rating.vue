@@ -9,12 +9,7 @@
       <br />
       <div class="group-info">
         <div class="box-title">小組ID:{{ GroupInfo.group_id }}
-          <el-button
-          class="send-bt"
-          type="warning"
-          @click="returnScore(GroupInfo)"
-          >送出</el-button
-        ></div>
+        </div>
         組長:{{ GroupInfo.leader.student_id + " " }}{{ GroupInfo.leader.name }}
         <input
           v-if="semester === 'last_score'"
@@ -51,6 +46,12 @@
         v-model="GroupInfo.comment"
         placeholder="評語"
       />
+      <el-button
+          class="send-bt"
+          type="warning"
+          @click="returnScore(GroupInfo)"
+          >送出</el-button
+        >
     </div>
     <br />
   </div>
@@ -106,37 +107,37 @@ export default {
     position: relative;
     text-align: left;
     height:100%;
-    left: 0%;
+    left: 7%;
   }
   .box-title {
     position: relative;
     left: 0%;
     font-size: large;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 5%;
   }
   .title {
     text-align: center;
     font-size: 30px;
-    font-weight: 500;
-    height:5%;
+    font-weight: 500px;
+    height:8%;
   }
   .card {
     position: relative;
     background-color: aliceblue;
-    left: 20%;
-    width: 50%;
+    left: 27%;
+    width: 40%;
     border-radius: 15px;
   }
   .send-bt {
     position: relative;
     border-radius: 20px;
-    left: 48%;
+    left: 0%;
   }
   .score-box {
     position: absolute;
     text-align: center;
-    left: 30%;
+    left: 40%;
     width: 10%;
     margin-left: 30%;
   }
@@ -183,8 +184,8 @@ export default {
   .send-bt {
     position: relative;
     border-radius: 20px;
-    left: 13%;
-    margin-bottom: 5%;
+    left: 5%;
+    margin-top: 0px;
   }
   .score-box {
     position: absolute;
