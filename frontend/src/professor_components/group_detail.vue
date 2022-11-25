@@ -2,19 +2,37 @@
   <div>
     <button @click="backToLastPage" class="back-bt">上一頁</button>
     <div class="card">
-      小組ID:{{ group.group_id }}<br />
-      組長:{{ group.leader.student_id + " " }}{{ group.leader.name }}
-      <div v-for="member in group.member">
+      <li class="word">
+        小組ID:{{ group.group_id }}
+      </li>
+      <li class="word">
+        組長:{{ group.leader.student_id + " " }}{{ group.leader.name }}
+      </li>
+      <li v-for="member in group.member" class="word">
         組員:{{ member.student_id + " " }}{{ member.name }}
-      </div>
+      </li>
+      <li class="word">
+        YouTube連結:<a v-bind:href="group.competition.YT_link" target="_blank"
+          >連結點我</a
+        >
+      </li>
+      <li class="word">專題競賽題目:{{ group.competition.competition_topics }}</li>
+      <el-button type="primary" @click="get_file(group)" class="download-bt"
+        >下載專題競賽報告</el-button
+      >
+      <el-button
+        type="primary"
+        @click="preview_file(group)"
+        class="download-bt"
+      >
+        預覽專題競賽報告
+      </el-button>
     </div>
-    <el-button type="primary" @click="get_file(group)" class="download-bt">下載期中報告</el-button>
-    <el-button type="primary" @click="preview_file(group)" class="download-bt"> 預覽期中報告 </el-button>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   props: ["groupInfo"],
   data() {
@@ -28,18 +46,18 @@ export default {
       axios
         .post(
           path,
-          { group_id: group.group_id, type: "interm_report" },
+          { group_id: group.group_id, type: "competition_report" },
           { responseType: "blob" }
         )
         .then((response) => {
           if (response.data.size != 0) {
-            const binartdata = [];
-            binartdata.push(response.data);
-            let blob = new Blob(binartdata, { type: "application/pdf" });
+            const binarydata = [];
+            binarydata.push(response.data);
+            let blob = new Blob(binarydata, { type: "application/pdf" });
             const url = window.URL.createObjectURL(blob);
             window.open(url);
           } else {
-            this.$message.warning("尚未上傳期中報告");
+            this.$message.warning("尚未上傳專題競賽報告");
           }
         });
     },
@@ -48,13 +66,14 @@ export default {
       axios
         .post(
           path,
-          { group_id: group.group_id, type: "interm_report" },
+          { group_id: group.group_id, type: "competition_report" },
           { responseType: "blob" }
         )
         .then((response) => {
           let blob = new Blob([response.data], { type: "application/pdf" });
           let reader = new FileReader();
-          let file_name = sessionStorage.getItem("group_id") + "期中報告.pdf";
+          let file_name =
+            sessionStorage.getItem("group_id") + "專題競賽報告.pdf";
           if (window.navigator.msSaveOrOpenBlob) {
             navigator.msSaveBlob(blob, file_name);
           } else {
@@ -70,60 +89,72 @@ export default {
           }
         });
     },
-    backToLastPage(){
-      this.$emit('backToLastPage')
-    }
+    backToLastPage() {
+      this.$emit("backToLastPage");
+    },
   },
-  created() {
-  },
+  created() {},
 };
 </script>
 
 <style lang="scss" scoped>
-@media screen{
-.back-bt{
-  position: absolute;
-  text-align: center;
-  top:20px;
-  right:30px;
-  width:7%;
-  height:7%;
-  font-size: small;
+@media screen {
+  .back-bt {
+    position: absolute;
+    text-align: center;
+    top: 20px;
+    right: 30px;
+    width: 7%;
+    height: 7%;
+    font-size: small;
+  }
+  .word {
+    font-size: large;
+    font-weight: 500;
+    text-align: left;
+    margin-left: 25%;
+  }
+  .card {
+    position: relative;
+    margin-top: 30px;
+    left: 27%;
+    width: 40%;
+    background-color: aliceblue;
+    text-align: left;
+  }
+  .download-bt {
+    position: relative;
+    margin-top: 2%;
+    margin-left: 16%;
+  }
 }
-.card {
-  position: relative;
-  margin-top: 30px;
-  align-items: center;
-  left:22%;
-  width: 50%;
-  background-color: aliceblue;
-}
-.download-bt{
-  position: relative;
-  margin-top: 2%;
-}}
-@media screen and (max-width: 480px){
-  .back-bt{
-  position: absolute;
-  text-align: center;
-  top:2%;
-  right:5%;
-  width:20%;
-  height:5%;
-  font-size: 10px;
-  font-weight: 500;
-}
-.card {
-  position: relative;
-  margin-top: 15%;
-  left: 5%;
-  width: 70%;
-  background-color: aliceblue;
-  align-items: left;
-}
-.download-bt{
-  position: relative;
-  margin-top: 5%;
-}
+@media screen and (max-width: 480px) {
+  .word {
+    font-size: medium;
+    font-weight: 500;
+    text-align: left;
+    margin-left: 0%;
+  }
+  .back-bt {
+    position: absolute;
+    text-align: center;
+    top: 2%;
+    right: 5%;
+    width: 20%;
+    height: 5%;
+    font-size: 9px;
+    font-weight: 500;
+  }
+  .card {
+    position: relative;
+    margin-top: 15%;
+    left: 0%;
+    width: 75%;
+    background-color: aliceblue;
+    align-items: left;
+  }
+  .download-bt {
+    display: none;
+  }
 }
 </style>

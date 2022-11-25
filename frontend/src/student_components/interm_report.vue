@@ -56,9 +56,9 @@ export default {
                 .then(
                     response => {
                         if(response.data.size!=0){
-                        const binartdata=[]
-                        binartdata.push(response.data)
-                        let blob = new Blob(binartdata, { type: "application/pdf" })
+                        const binarydata=[]
+                        binarydata.push(response.data)
+                        let blob = new Blob(binarydata, { type: "application/pdf" })
                         const url = window.URL.createObjectURL(blob)
                         window.open(url)}
                         else{

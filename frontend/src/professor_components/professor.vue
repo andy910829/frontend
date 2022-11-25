@@ -109,9 +109,12 @@ export default {
 .card {
   position: relative;
   margin-top: 5%;
-  left: 20%;
-  width: 55%;
+  border-radius: 20px;
+  left: 25%;
+  width: 45%;
   background-color: aliceblue;
+  font-size: medium;
+  font-weight: 500;
 }
 .function-list {
   position: absolute;
@@ -153,9 +156,11 @@ export default {
 .card {
   position: relative;
   margin-top: 5%;
-  left: 10%;
-  width: 55%;
+  left: 5%;
+  width: 70%;
   background-color: aliceblue;
+  font-size: medium;
+  font-weight: 500;
 }
 .function-list {
   position: absolute;

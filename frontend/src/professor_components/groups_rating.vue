@@ -1,5 +1,5 @@
 <template>
-  <div class="title">小組評分</div>
+  <h2>小組評分</h2>
   <select class="menu" v-model="semester">
     <option value="last_score">上學期</option>
     <option value="next_score">下學期</option>
@@ -39,13 +39,13 @@
           v-model="member.next_score"
         />
       </div>
-      <br />
       <input
         v-if="semester === 'next_score'"
         class="comment-box"
         v-model="GroupInfo.comment"
         placeholder="評語"
       />
+      <br/>
       <el-button
           class="send-bt"
           type="warning"
@@ -100,8 +100,9 @@ export default {
     position: relative;
     left: 0px;
     text-align: center;
-    width: 50%;
+    width: 60%;
     height: 50px;
+    margin-top: 3%;
   }
   .group-info {
     position: relative;
@@ -116,12 +117,6 @@ export default {
     font-weight: 600;
     margin-bottom: 5%;
   }
-  .title {
-    text-align: center;
-    font-size: 30px;
-    font-weight: 500px;
-    height:8%;
-  }
   .card {
     position: relative;
     background-color: aliceblue;
@@ -133,6 +128,7 @@ export default {
     position: relative;
     border-radius: 20px;
     left: 0%;
+    margin-top:3%;
   }
   .score-box {
     position: absolute;
@@ -153,9 +149,10 @@ export default {
   }
   .comment-box {
     position: relative;
-    left: 0px;
+    margin-top:10px;
+    left: 10px;
     text-align: center;
-    width: 50%;
+    width: 58%;
     height: 30px;
   }
   .group-info {
@@ -169,11 +166,6 @@ export default {
     font-weight: 500;
     margin-bottom: 5%;
   }
-  .title {
-    font-size: 30px;
-    font-weight: 500;
-    height:8%;
-  }
   .card {
     position: relative;
     background-color: aliceblue;
@@ -185,7 +177,7 @@ export default {
     position: relative;
     border-radius: 20px;
     left: 5%;
-    margin-top: 0px;
+    margin-top: 10px;
   }
   .score-box {
     position: absolute;

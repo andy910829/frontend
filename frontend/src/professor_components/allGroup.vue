@@ -1,5 +1,5 @@
 <template>
-  <div class="small-title">小組資訊</div>
+  <h2>小組資訊</h2>
   <div v-if="status === ''">
     <select class="menu" v-model="acedemicYear" @change="getAllGroups">
       <option :value="''">
@@ -11,12 +11,12 @@
     </select>
     <div v-for="GroupInfo in groupList" :key="GroupInfo.group_id">
         <button class="card" @click="changeStatus(GroupInfo)">
+        學年度:{{GroupInfo.acedemic_year}}<br/>
         小組ID:{{ GroupInfo.group_id }}<br />
         組長:{{ GroupInfo.leader.student_id + " "
         }}{{ GroupInfo.leader.name }}
         <div v-for="member in GroupInfo.member">
           組員:{{ member.student_id + " " }}{{ member.name }}<br/>
-          學年度:{{GroupInfo.acedemic_year}}
         </div>
       </button>
       <br />
@@ -52,7 +52,6 @@ export default {
         .post(path, { pro_name: sessionStorage.getItem("name"),acedemic_year:this.acedemicYear })
         .then((response) => {
           this.groupList = response.data.res;
-          console.log(this.groupList)
           this.acedemicYearList=[]
           for (const key in response.data.acedemic_year) {
             this.acedemicYearList.push(key);
@@ -81,7 +80,7 @@ export default {
   }
   .card {
     position: relative;
-    margin-top: 30px;
+    margin-top: 3%;
     margin-left: 0px;
     width: 500px;
     background-color: aliceblue;
@@ -98,7 +97,7 @@ export default {
     position: relative;
     margin-top: 5%;
     left: 0px;
-    width: 90%;
+    width: 95%;
     background-color: aliceblue;
   }
 }
