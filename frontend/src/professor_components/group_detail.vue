@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="backToLastPage" class="back-bt">上一頁</button>
+    <button class="lastpage-bt" @click="backToLastPage">上一頁</button>
     <div class="card">
       <li class="word">
         小組ID:{{ group.group_id }}
@@ -41,6 +41,9 @@ export default {
     };
   },
   methods: {
+    backToLastPage() {
+      this.$emit("backToLastPage");
+    },
     preview_file(group) {
       const path = import.meta.env.VITE_API + "get_file";
       axios
@@ -88,10 +91,7 @@ export default {
             };
           }
         });
-    },
-    backToLastPage() {
-      this.$emit("backToLastPage");
-    },
+    }
   },
   created() {},
 };
@@ -99,7 +99,8 @@ export default {
 
 <style lang="scss" scoped>
 @media screen {
-  .back-bt {
+  .lastpage-bt {
+    display: block;
     position: absolute;
     text-align: center;
     top: 20px;
@@ -129,26 +130,19 @@ export default {
   }
 }
 @media screen and (max-width: 480px) {
+  .lastpage-bt{
+    display: none;
+  }
   .word {
     font-size: medium;
     font-weight: 500;
     text-align: left;
-    margin-left: 0%;
-  }
-  .back-bt {
-    position: absolute;
-    text-align: center;
-    top: 2%;
-    right: 5%;
-    width: 20%;
-    height: 5%;
-    font-size: 9px;
-    font-weight: 500;
+    margin-left: 15%;
   }
   .card {
     position: relative;
     margin-top: 15%;
-    left: 0%;
+    left: 2.5%;
     width: 75%;
     background-color: aliceblue;
     align-items: left;

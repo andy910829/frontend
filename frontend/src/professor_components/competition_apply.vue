@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2>專題競賽申請</h2>
+    <button class="lastpage-bt" @click="backToLastPage">上一頁</button>
     <div v-for="GroupInfo in GroupList" :key="GroupInfo.group_id">
       <div class="card">
         <li class="word">
@@ -47,6 +48,9 @@ export default {
     };
   },
   methods: {
+    backToLastPage() {
+      this.$emit("backToLastPage");
+    },
     ansCompetitonStatus(groupInfo){
         const path = import.meta.env.VITE_API + "ans_competiton_status";
         axios.post(path,{group_id:groupInfo.group_id,status:this.ansStatus,pro_name:groupInfo.advisor}).then(
@@ -130,6 +134,9 @@ export default {
 
 <style lang="scss" scoped>
 @media screen {
+  .lastpage-bt{
+    display: none;
+  }
   .word {
     font-size: large;
     font-weight: 500;
@@ -156,6 +163,12 @@ export default {
   }
 }
 @media screen and (max-width: 480px) {
+  .word {
+    position: relative;
+    font-size: medium;
+    font-weight: 500;
+    margin-left: 5%;
+  }
   .card {
     position: relative;
     margin-top: 5%;
@@ -171,6 +184,15 @@ export default {
   .ck-bt {
     position: relative;
     margin-top: 2%;
+  }
+  .lastpage-bt{
+    display: block;
+    position: absolute;
+    font-size: 5px;
+    top:2.5%;
+    left:0%;
+    width:15%;
+    height:7%;
   }
 }
 </style>

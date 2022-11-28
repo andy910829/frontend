@@ -1,24 +1,53 @@
 <template>
   <h2>期中報告</h2>
+  <button class="lastpage-bt" @click="backToLastPage">上一頁</button>
   <div v-for="GroupInfo in GroupList" :key="GroupInfo.group_id">
     <div class="card">
-      小組ID:{{ GroupInfo.group_id }}<br />
-      組長:{{ GroupInfo.leader.student_id + " " }}{{ GroupInfo.leader.name }}
-      <div v-for="member in GroupInfo.member">
+      <div class="word">
+        小組ID:{{ GroupInfo.group_id }}
+        <br />
+        組長:{{ GroupInfo.leader.student_id + " " }}{{ GroupInfo.leader.name
+        }}<br />
+      </div>
+      <div v-for="member in GroupInfo.member" class="word">
         組員:{{ member.student_id + " " }}{{ member.name }}
       </div>
-      <el-button type="primary" @click="get_file(group)" class="download-bt"
+      <el-button type="primary" @click="get_file(GroupInfo)" class="download-bt"
         >下載期中報告</el-button
       >
       <el-button
         type="primary"
-        @click="preview_file(group)"
+        @click="preview_file(GroupInfo)"
         class="download-bt"
       >
         預覽期中報告
       </el-button>
+      <div class="card-left">
+        <div class="card-left-components">
+          <span class="left-word">原始分數 </span>
+          <span class="left-word"> 修改分數 </span>
+          <div class="left-score">
+            {{ GroupInfo.leader.interm_score + " "
+            }}<input
+              class="input-box"
+              @input="changeFromInput($event, GroupInfo.leader.name)"
+            />
+          </div>
+          <div v-for="member in GroupInfo.member" class="left-score">
+            {{ member.interm_score }}
+            <input
+              class="input-box"
+              @input="changeFromInput($event, member.name)"
+            />
+          </div>
+        </div>
+        <el-button
+          class="submit-bt"
+          @click="intermReportScore(GroupInfo.group_id)"
+          >送出</el-button
+        >
+      </div>
     </div>
-    <br />
   </div>
 </template>
 
@@ -29,9 +58,19 @@ export default {
     return {
       status: "",
       GroupList: [],
+      scoreResult: {},
     };
   },
   methods: {
+    backToLastPage() {
+      this.$emit("backToLastPage");
+    },
+    changeFromInput(event, name) {
+      let res = {
+        [name]: event.target.value,
+      };
+      this.scoreResult = Object.assign(this.scoreResult, res);
+    },
     GetGroupInfo() {
       const path = import.meta.env.VITE_API + "GetGroupInfo_Pro";
       axios
@@ -87,6 +126,21 @@ export default {
           }
         });
     },
+    intermReportScore(groupId) {
+      const path = import.meta.env.VITE_API + "interm_report_score";
+      axios
+        .post(path, {
+          pro_name: sessionStorage.getItem("name"),
+          score: this.scoreResult,
+          group_id: groupId,
+        })
+        .then((response) => {
+          if (response.data.res === true) {
+            this.$message.success("修改成功");
+            this.GetGroupInfo();
+          }
+        });
+    },
   },
   created() {
     this.GetGroupInfo();
@@ -96,34 +150,124 @@ export default {
 
 <style lang="scss" scoped>
 @media screen {
+  .lastpage-bt{
+    display: none;
+  }
+  .left-word {
+    position: relative;
+    margin-left: 7.5%;
+  }
+  .left-score {
+    position: relative;
+    margin-left: 20%;
+  }
+  .submit-bt {
+    position: relative;
+    top: 25%;
+    left: 30%;
+  }
+  .input-box {
+    position: relative;
+    width: 10%;
+    text-align: center;
+    margin-left: 40%;
+  }
+  .card-left-components {
+    position: relative;
+    margin-left: 5%;
+    top: 20%;
+  }
+  .card-left {
+    position: absolute;
+    border-radius: 0px 20px 20px 0px;
+    background-color: rgb(160, 214, 234);
+    top: 0%;
+    left: 70%;
+    height: 100%;
+    width: 30%;
+  }
   .card {
     position: relative;
     margin-top: 3%;
     border-radius: 20px;
-    left: 25%;
-    width: 45%;
+    left: 20%;
+    width: 55%;
     background-color: aliceblue;
     font-size: medium;
     font-weight: 500;
+    text-align: left;
   }
   .download-bt {
     position: relative;
     margin-top: 2%;
+    margin-left: 10%;
+  }
+  .word {
+    position: relative;
+    margin-left: 15%;
   }
 }
 @media screen and (max-width: 480px) {
+  .lastpage-bt{
+    display: block;
+    position: absolute;
+    font-size: 5px;
+    top:2.5%;
+    left:0%;
+    width:15%;
+    height:7%;
+  }
+  .submit-bt {
+    position: relative;
+    top: 25%;
+    left: 37.5%;
+  }
+  .word {
+    position: relative;
+    margin-left: 15%;
+  }
+  .card-left-components {
+    position: relative;
+    margin-left: 5%;
+    top: 5%;
+  }
+  .left-word {
+    position: relative;
+    margin-left: 12.5%;
+  }
+  .left-score {
+    position: relative;
+    margin-left: 20%;
+  }
+  .download-bt{
+    position: relative;
+    width:40%;
+    font-size: 10px;
+    margin-left: 10%;
+  }
+  .card-left {
+    position: absolute;
+    border-radius: 0px 0px 20px 20px;
+    background-color: rgb(160, 214, 234);
+    top: 100%;
+    left: 0%;
+    height: 50%;
+    width: 100%;
+  }
+  .word {
+    position: relative;
+    margin-left: 0%;
+  }
   .card {
     position: relative;
     margin-top: 3%;
-    border-radius: 20px;
+    border-radius:  20px 20px 0px 0px;
     left: 2.5%;
     width: 70%;
+    height: 80%;
     background-color: aliceblue;
     font-size: medium;
     font-weight: 500;
-  }
-  .download-bt {
-    display: none;
   }
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <h2>小組資訊</h2>
+  <button class="lastpage-bt" @click="backToLastPage">上一頁</button>
   <div v-if="status === ''">
     <select class="menu" v-model="acedemicYear" @change="getAllGroups">
       <option :value="''">
@@ -46,6 +47,9 @@ export default {
     group_detail,
   },
   methods: {
+    backToLastPage() {
+      this.$emit("backToLastPage");
+    },
     getAllGroups() {
       const path = import.meta.env.VITE_API + "get_all_group";
       axios
@@ -71,6 +75,9 @@ export default {
 
 <style lang="scss" scoped>
 @media screen {
+  .lastpage-bt{
+    display: none;
+  }
   .menu {
     position: absolute;
     right: 5%;
@@ -99,6 +106,15 @@ export default {
     left: 0px;
     width: 95%;
     background-color: aliceblue;
+  }
+  .lastpage-bt{
+    display: block;
+    position: absolute;
+    font-size: 5px;
+    top:2.5%;
+    left:0%;
+    width:15%;
+    height:7%;
   }
 }
 </style>

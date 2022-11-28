@@ -162,7 +162,7 @@ export default {
   .headertype {
     z-index: 999;
     width: 100%;
-    height: 5%;
+    height: 7%;
     background: rgba(255, 255, 255, 0.5);
     position: absolute;
   }
