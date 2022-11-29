@@ -5,6 +5,7 @@
     <option value="last_score">上學期</option>
     <option value="next_score">下學期</option>
   </select>
+  <el-scrollbar class="scrollbar">
   <div v-for="GroupInfo in GroupList" :key="GroupInfo.group_id">
     <div class="card">
       <br />
@@ -19,47 +20,53 @@
         v-if="semester === 'next_score'"
         class="comment-box"
         v-model="GroupInfo.comment"
+        @input="nextchangeFromInput($event, 'comment')"
         placeholder="評語"
       />
       <br />
       <div class="card-side">
+        <div class="card-side-components">
+        <div class="word-mb">姓名</div>
         <span class="word">原始分數</span>
         <span class="word">修改分數</span> 
+        <div class="name">{{ GroupInfo.leader.name }}</div>
         <div v-if="semester === 'last_score'" class="lastside-score">
           {{ GroupInfo.leader.last_score }}
           <input
             placeholder="分數"
             class="leaderscore-box"
-            v-model="GroupInfo.leader.last_score"
+            @input="lastchangeFromInput($event, GroupInfo.leader.name)"
           />
-          <div v-for="member in GroupInfo.member">
+          <div v-for="member in GroupInfo.member" class="member-area">
+            <span class="member-name">{{ member.name }}</span>
             {{ member.last_score }}
             <input
               placeholder="分數"
               class="memberscore-box"
-              v-model="member.last_score"
+              @input="lastchangeFromInput($event, member.name)"
             />
-            <el-button
+          </div>
+          <el-button
               class="lastsend-bt"
               type="warning"
               @click="returnScore(GroupInfo)"
               >送出</el-button
             >
-          </div>
         </div>
         <div v-else-if="semester === 'next_score'" class="nextside-score">
           {{ GroupInfo.leader.next_score }}
           <input
             placeholder="分數"
             class="leaderscore-box"
-            v-model="GroupInfo.leader.next_score"
+            @input="nextchangeFromInput($event, GroupInfo.leader.name)"
           />
-          <div v-for="member in GroupInfo.member">
+          <div v-for="member in GroupInfo.member" class="member-area">
+            <span class="member-name">{{ member.name }}</span>
             {{ member.next_score }}
             <input
               placeholder="分數"
               class="memberscore-box"
-              v-model="member.next_score"
+              @input="nextchangeFromInput($event, member.name)"
             />
           </div>
           <el-button
@@ -70,9 +77,11 @@
           >
         </div>
       </div>
+      </div>
     </div>
     <br />
   </div>
+</el-scrollbar>
 </template>
 
 <script>
@@ -83,24 +92,52 @@ export default {
   data() {
     return {
       GroupList: this.groupinfo,
+      groupAns:{},
       groupsScore: [],
       semester: "last_score",
     };
   },
   methods: {
+    GetGroupInfo() {
+      const vm = this;
+      const path = import.meta.env.VITE_API + "GetGroupInfo_Pro";
+      axios
+        .post(path, { pro_name: sessionStorage.getItem("name") })
+        .then((response) => {
+          vm.GroupList = response.data.res;
+        });
+    },
+    lastchangeFromInput(event,name) {
+      let res={
+        score_type:'last_score',
+        [name]:event.target.value
+      }
+      this.groupAns = Object.assign(this.groupAns, res);
+    },
+    nextchangeFromInput(event,name) {
+      let res={
+        score_type:'next_score',
+        [name]:event.target.value
+      }
+      this.groupAns = Object.assign(this.groupAns, res);
+    },
     backToLastPage() {
       this.$emit("backToLastPage");
     },
-    returnScore(groupInfo) {
+    returnScore(groupinfo) {
+      console.log(this.groupAns)
       const path = import.meta.env.VITE_API + "set_score";
       axios
         .post(path, {
-          group_info: groupInfo,
+          group_id: groupinfo.group_id,
+          res: this.groupAns,
           pro_name: sessionStorage.getItem("name"),
         })
         .then((response) => {
           if (response.data.res === true) {
             this.$message.success("成績修改成功");
+            this.GetGroupInfo();
+            this.groupAns = {};
           }
         });
     },
@@ -110,23 +147,45 @@ export default {
 
 <style lang="scss" scoped>
 @media screen {
+  .member-name{
+    display: none;
+  }
+  .name{
+    display:none
+  }
+  .word-mb{
+    display:none;
+  }
+  .member-area{
+    display: block;
+    position: relative;
+    margin-top: 0%;
+  }
+  .card-side-components{
+    position: relative;
+    text-align: left;
+    top:20%;
+    height:20%;
+  }
   .lastside-score {
     position: relative;
     margin-left: 20%;
-    top: 20%;
+    margin-top: 10%;
   }
   .nextside-score {
     position: relative;
-    margin-left: 20%;
+    margin-left: 15%;
     top: 15%;
   }
   .word {
-    display: block;
     position: relative;
     font-size: medium;
     font-weight: 500;
+    padding-right: 0%;
     margin-left: 10%;
+    width:40%;
     top: 20%;
+    left:0%;
   }
   .card-side {
     position: absolute;
@@ -136,7 +195,6 @@ export default {
     height: 100%;
     top: 0%;
     left: 70%;
-    text-align: left;
   }
   .lastpage-bt {
     display: none;
@@ -183,7 +241,7 @@ export default {
     position: relative;
     border-radius: 20px;
     left: 15%;
-    margin-top: 15%;
+    margin-top: 10%;
   }
   .nextsend-bt {
     position: relative;
@@ -194,13 +252,14 @@ export default {
   .leaderscore-box {
     position: relative;
     text-align: center;
-    margin-top: 25%;
+    margin-top: 10%;
     margin-left: 40%;
     width: 20%;
   }
   .memberscore-box {
     position: relative;
     text-align: center;
+    top:5%;
     margin-top: 0%;
     margin-left: 40%;
     width: 20%;
@@ -208,7 +267,90 @@ export default {
 }
 
 @media screen and (max-width: 480px) {
-  .lastpage-bt {
+  .member-area{
+    display: block;
+    position: relative;
+    margin-top: 0%;
+  }
+  .nextside-score{
+    display: block;
+    position: relative;
+    margin-top: 0%;
+    margin-left:15%;
+    top:0%;
+    left:30%;
+  }
+  .comment-box{
+    position: relative;
+    width:70%;
+    height:30px;
+    left:0%;
+    margin-bottom: 5%;
+  }
+  .scrollbar {
+    display: block;
+    height: 90%;
+  }
+  .card-side-components{
+    display: block;
+    position: relative;
+  }
+  .nextsend-bt{
+    display: block;
+    position: relative;
+    margin-top:5%;
+    left:-8%;
+  }
+  .lastsend-bt{
+    display: block;
+    position: relative;
+    margin-top:3%;
+    left:-10%;
+  }
+  .memberscore-box{
+    display: block;
+    position: absolute;
+    margin-left:35%;
+  }
+  .leaderscore-box{
+    display: block;
+    position: absolute;
+    top:0%;
+    margin-top: 0%;
+    margin-left: 35%;
+  }
+  .member-name{
+    display: block;
+    position: absolute;
+    left:-40%;
+  }
+  .name {
+    display: block;
+    position: absolute;
+    left: 10%;
+  }
+  .lastside-score{
+    display: block;
+    position: relative;
+    margin-top: 0%;
+    margin-left:15%;
+    top:0%;
+    left:30%;
+  }
+  .card-side-components{
+    position: relative;
+    text-align: left;
+    top:20%;
+    height:20%;
+  }
+  .word-mb{
+    display: block;
+    position: absolute;
+    font-size: medium;
+    font-weight: 500;
+    left: 10%;
+  }
+  .lastpage-bt{
     display: block;
     position: absolute;
     font-size: 5px;
@@ -217,40 +359,30 @@ export default {
     width: 15%;
     height: 7%;
   }
-  .menu {
-    position: absolute;
-    right: 6%;
-    width: 17%;
-    height: 5%;
-    top: 2%;
-  }
-  .comment-box {
+  .word{
     position: relative;
-    margin-top: 10px;
-    left: 10px;
-    text-align: center;
-    width: 58%;
-    height: 30px;
+    top: 0%;
+    left: 22.5%;
+    margin-left: 15%;
   }
-  .group-info {
+  .group-info{
     position: relative;
-    text-align: left;
-    left: 0%;
-    font-size: medium;
+    margin-right: 0%;
+    left:20%;
+    width:100%;
   }
-  .box-title {
+  .card{
     position: relative;
-    font-size: large;
-    font-weight: 500;
-    margin-bottom: 5%;
+    padding: 0%;
+    width:90%;
+    left:5%;
+    padding-bottom: 0%;
   }
-  .card {
+  .card-side{
     position: relative;
-    background-color: aliceblue;
-    left: 0%;
-    width: 80%;
-    border-radius: 20px;
-    font-size: small;
+    border-radius: 0px 0px 20px 20px;
+    width:100%;
+    left:0%;
   }
 }
 </style>

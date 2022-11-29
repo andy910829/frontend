@@ -26,7 +26,7 @@
   <group_detail
     v-if="status === 'group_detail'"
     :groupInfo="group"
-    @backToLastPage="status = ''"
+    @backToAllGroupPage="status = ''"
   />
 </template>
 

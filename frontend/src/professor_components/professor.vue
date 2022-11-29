@@ -164,8 +164,9 @@ export default {
     position: absolute;
     top: 7%;
     left: 0%;
-    height: 100%;
+    height: 93%;
     width: 100%;
+    padding-bottom: 0%;
   }
   .mobile-bt {
     position: relative;

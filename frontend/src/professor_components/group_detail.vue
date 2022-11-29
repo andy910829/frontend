@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     backToLastPage() {
-      this.$emit("backToLastPage");
+      this.$emit("backToAllGroupPage");
     },
     preview_file(group) {
       const path = import.meta.env.VITE_API + "get_file";
@@ -92,8 +92,7 @@ export default {
           }
         });
     }
-  },
-  created() {},
+  }
 };
 </script>
 

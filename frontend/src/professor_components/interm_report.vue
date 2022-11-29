@@ -1,54 +1,63 @@
 <template>
   <h2>期中報告</h2>
   <button class="lastpage-bt" @click="backToLastPage">上一頁</button>
-  <div v-for="GroupInfo in GroupList" :key="GroupInfo.group_id">
-    <div class="card">
-      <div class="word">
-        小組ID:{{ GroupInfo.group_id }}
-        <br />
-        組長:{{ GroupInfo.leader.student_id + " " }}{{ GroupInfo.leader.name
-        }}<br />
-      </div>
-      <div v-for="member in GroupInfo.member" class="word">
-        組員:{{ member.student_id + " " }}{{ member.name }}
-      </div>
-      <el-button type="primary" @click="get_file(GroupInfo)" class="download-bt"
-        >下載期中報告</el-button
-      >
-      <el-button
-        type="primary"
-        @click="preview_file(GroupInfo)"
-        class="download-bt"
-      >
-        預覽期中報告
-      </el-button>
-      <div class="card-left">
-        <div class="card-left-components">
-          <span class="left-word">原始分數 </span>
-          <span class="left-word"> 修改分數 </span>
-          <div class="left-score">
-            {{ GroupInfo.leader.interm_score + " "
-            }}<input
-              class="input-box"
-              @input="changeFromInput($event, GroupInfo.leader.name)"
-            />
-          </div>
-          <div v-for="member in GroupInfo.member" class="left-score">
-            {{ member.interm_score }}
-            <input
-              class="input-box"
-              @input="changeFromInput($event, member.name)"
-            />
-          </div>
+  <el-scrollbar class="scrollbar">
+    <div v-for="GroupInfo in GroupList" :key="GroupInfo.group_id">
+      <div class="card">
+        <div class="word">
+          小組ID:{{ GroupInfo.group_id }}
+          <br />
+          組長:{{ GroupInfo.leader.student_id + " " }}{{ GroupInfo.leader.name
+          }}<br />
+        </div>
+        <div v-for="member in GroupInfo.member" class="word">
+          組員:{{ member.student_id + " " }}{{ member.name }}
         </div>
         <el-button
-          class="submit-bt"
-          @click="intermReportScore(GroupInfo.group_id)"
-          >送出</el-button
+          type="primary"
+          @click="get_file(GroupInfo)"
+          class="download-bt"
+          >下載期中報告</el-button
         >
+        <el-button
+          type="primary"
+          @click="preview_file(GroupInfo)"
+          class="download-bt"
+        >
+          預覽期中報告
+        </el-button>
+        <div class="card-left">
+          <div class="card-left-components">
+            <div class="left-word-mb">姓名</div>
+            <span class="left-word">原始分數 </span>
+            <span class="left-word"> 修改分數 </span>
+            <div class="name">{{ GroupInfo.leader.name }}</div>
+            <div class="left-score">
+              {{ GroupInfo.leader.interm_score + " "
+              }}<input
+                class="input-box"
+                @input="changeFromInput($event, GroupInfo.leader.name)"
+              />
+            </div>
+            <div v-for="member in GroupInfo.member" class="left-score">
+              <span class="member-name">{{ member.name }}</span>
+              {{ member.interm_score }}
+              <input
+                class="input-box"
+                @input="changeFromInput($event, member.name)"
+              />
+            </div>
+          </div>
+          <el-button
+            class="submit-bt"
+            @click="intermReportScore(GroupInfo.group_id)"
+            type="warning"
+            >送出</el-button
+          >
+        </div>
       </div>
     </div>
-  </div>
+  </el-scrollbar>
 </template>
 
 <script>
@@ -150,7 +159,7 @@ export default {
 
 <style lang="scss" scoped>
 @media screen {
-  .lastpage-bt{
+  .lastpage-bt {
     display: none;
   }
   .left-word {
@@ -174,7 +183,7 @@ export default {
   }
   .card-left-components {
     position: relative;
-    margin-left: 5%;
+    margin-left: 0%;
     top: 20%;
   }
   .card-left {
@@ -206,16 +215,39 @@ export default {
     position: relative;
     margin-left: 15%;
   }
+  .member-name {
+    display: none;
+  }
+  .name {
+    display: none;
+  }
+  .left-word-mb {
+    display: none;
+  }
 }
 @media screen and (max-width: 480px) {
-  .lastpage-bt{
+  .scrollbar {
+    display: block;
+    height: 90%;
+  }
+  .member-name {
+    display: block;
+    position: absolute;
+    left: -58%;
+  }
+  .name {
+    display: block;
+    position: absolute;
+    left: 5%;
+  }
+  .lastpage-bt {
     display: block;
     position: absolute;
     font-size: 5px;
-    top:2.5%;
-    left:0%;
-    width:15%;
-    height:7%;
+    top: 2.5%;
+    left: 0%;
+    width: 15%;
+    height: 7%;
   }
   .submit-bt {
     position: relative;
@@ -224,7 +256,7 @@ export default {
   }
   .word {
     position: relative;
-    margin-left: 15%;
+    left:10%;
   }
   .card-left-components {
     position: relative;
@@ -233,26 +265,33 @@ export default {
   }
   .left-word {
     position: relative;
-    margin-left: 12.5%;
+    top: 0%;
+    left: 22.5%;
+    margin-left: 10%;
+  }
+  .left-word-mb {
+    display: block;
+    position: absolute;
+    left: 5%;
   }
   .left-score {
     position: relative;
-    margin-left: 20%;
+    margin-left: 40%;
   }
-  .download-bt{
+  .download-bt {
     position: relative;
-    width:40%;
+    width: 40%;
     font-size: 10px;
     margin-left: 10%;
   }
   .card-left {
-    position: absolute;
+    position: relative;
     border-radius: 0px 0px 20px 20px;
     background-color: rgb(160, 214, 234);
-    top: 100%;
-    left: 0%;
+    margin-top: 10%;
+    left: -13.5%;
     height: 50%;
-    width: 100%;
+    width: 127%;
   }
   .word {
     position: relative;
@@ -260,11 +299,12 @@ export default {
   }
   .card {
     position: relative;
-    margin-top: 3%;
-    border-radius:  20px 20px 0px 0px;
-    left: 2.5%;
+    margin-top: 5%;
+    border-radius: 20px 20px 20px 20px;
+    left: 5%;
     width: 70%;
-    height: 80%;
+    height: 70%;
+    padding-bottom: 0%;
     background-color: aliceblue;
     font-size: medium;
     font-weight: 500;
