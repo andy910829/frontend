@@ -142,6 +142,9 @@ export default {
         });
     },
   },
+  created(){
+    this.GetGroupInfo()
+  }
 };
 </script>
 
