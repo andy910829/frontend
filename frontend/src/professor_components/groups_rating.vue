@@ -1,87 +1,85 @@
 <template>
-  <h2>小組評分</h2>
+  <h2>下學期評分</h2>
   <button class="lastpage-bt" @click="backToLastPage">上一頁</button>
-  <select class="menu" v-model="semester">
-    <option value="last_score">上學期</option>
-    <option value="next_score">下學期</option>
-  </select>
   <el-scrollbar class="scrollbar">
-  <div v-for="GroupInfo in GroupList" :key="GroupInfo.group_id">
-    <div class="card">
-      <br />
-      <div class="group-info">
-        <div class="box-title">小組ID:{{ GroupInfo.group_id }}</div>
-        組長:{{ GroupInfo.leader.student_id + " " }}{{ GroupInfo.leader.name }}
-      </div>
-      <div v-for="member in GroupInfo.member" class="group-info">
-        組員:{{ member.student_id + " " }}{{ member.name }}
-      </div>
-      <input
-        v-if="semester === 'next_score'"
-        class="comment-box"
-        v-model="GroupInfo.comment"
-        @input="nextchangeFromInput($event, 'comment')"
-        placeholder="評語"
-      />
-      <br />
-      <div class="card-side">
-        <div class="card-side-components">
-        <div class="word-mb">姓名</div>
-        <span class="word">原始分數</span>
-        <span class="word">修改分數</span> 
-        <div class="name">{{ GroupInfo.leader.name }}</div>
-        <div v-if="semester === 'last_score'" class="lastside-score">
-          {{ GroupInfo.leader.last_score }}
-          <input
-            placeholder="分數"
-            class="leaderscore-box"
-            @input="lastchangeFromInput($event, GroupInfo.leader.name)"
-          />
-          <div v-for="member in GroupInfo.member" class="member-area">
-            <span class="member-name">{{ member.name }}</span>
-            {{ member.last_score }}
-            <input
-              placeholder="分數"
-              class="memberscore-box"
-              @input="lastchangeFromInput($event, member.name)"
-            />
-          </div>
-          <el-button
-              class="lastsend-bt"
-              type="warning"
-              @click="returnScore(GroupInfo)"
-              >送出</el-button
-            >
+    <div v-for="GroupInfo in GroupList" :key="GroupInfo.group_id">
+      <div class="card">
+        <br />
+        <div class="group-info">
+          <div class="box-title">小組ID:{{ GroupInfo.group_id }}</div>
+          組長:{{ GroupInfo.leader.student_id + " "
+          }}{{ GroupInfo.leader.name }}
         </div>
-        <div v-else-if="semester === 'next_score'" class="nextside-score">
-          {{ GroupInfo.leader.next_score }}
-          <input
-            placeholder="分數"
-            class="leaderscore-box"
-            @input="nextchangeFromInput($event, GroupInfo.leader.name)"
-          />
-          <div v-for="member in GroupInfo.member" class="member-area">
-            <span class="member-name">{{ member.name }}</span>
-            {{ member.next_score }}
-            <input
-              placeholder="分數"
-              class="memberscore-box"
-              @input="nextchangeFromInput($event, member.name)"
-            />
-          </div>
-          <el-button
-            class="nextsend-bt"
-            type="warning"
-            @click="returnScore(GroupInfo)"
-            >送出</el-button
+        <div v-for="member in GroupInfo.member" class="group-info">
+          組員:{{ member.student_id + " " }}{{ member.name }}
+        </div>
+        <div class="group-info">
+          {{ "專題競賽題目:" + GroupInfo.competition.competition_topics }}
+        </div>
+        <div class="group-info">
+          YouTube連結:<a
+            v-bind:href="GroupInfo.competition.YT_link"
+            target="_blank"
+            >連結點我</a
           >
         </div>
+        <div>
+          <el-button
+            type="primary"
+            @click="get_file(GroupInfo)"
+            class="download-bt"
+            >下載專題競賽報告</el-button
+          >
+          <el-button
+            type="primary"
+            @click="preview_file(GroupInfo)"
+            class="download-bt"
+          >
+            預覽專題競賽報告
+          </el-button>
+        </div>
+        <input
+          class="comment-box"
+          v-model="GroupInfo.comment"
+          @input="nextchangeFromInput($event, 'comment')"
+          placeholder="評語"
+        />
+        <br />
+        <div class="card-side">
+          <div class="card-side-components">
+            <div class="word-mb">姓名</div>
+            <span class="word">原始分數</span>
+            <span class="word">修改分數</span>
+            <div class="name">{{ GroupInfo.leader.name }}</div>
+            <div class="nextside-score">
+              {{ GroupInfo.leader.next_score }}
+              <input
+                placeholder="分數"
+                class="leaderscore-box"
+                @input="nextchangeFromInput($event, GroupInfo.leader.name)"
+              />
+              <div v-for="member in GroupInfo.member" class="member-area">
+                <span class="member-name">{{ member.name }}</span>
+                {{ member.next_score }}
+                <input
+                  placeholder="分數"
+                  class="memberscore-box"
+                  @input="nextchangeFromInput($event, member.name)"
+                />
+              </div>
+              <el-button
+                class="nextsend-bt"
+                type="warning"
+                @click="returnScore(GroupInfo)"
+                >送出</el-button
+              >
+            </div>
+          </div>
+        </div>
       </div>
-      </div>
+      <br />
     </div>
-    <br />
-  </div>
-</el-scrollbar>
+  </el-scrollbar>
 </template>
 
 <script>
@@ -92,12 +90,58 @@ export default {
   data() {
     return {
       GroupList: this.groupinfo,
-      groupAns:{},
-      groupsScore: [],
-      semester: "last_score",
+      groupAns: {},
     };
   },
   methods: {
+    get_file(group) {
+      const path = import.meta.env.VITE_API + "get_file";
+      axios
+        .post(
+          path,
+          { group_id: group.group_id, type: "competition_report" },
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          let blob = new Blob([response.data], { type: "application/pdf" });
+          let reader = new FileReader();
+          let file_name =
+            sessionStorage.getItem("group_id") + "專題競賽報告.pdf";
+          if (window.navigator.msSaveOrOpenBlob) {
+            navigator.msSaveBlob(blob, file_name);
+          } else {
+            reader.readAsDataURL(blob, "ASCII");
+            reader.onload = (e) => {
+              let a = document.createElement("a");
+              a.download = file_name;
+              a.href = e.target.result;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+            };
+          }
+        });
+    },
+    preview_file(group) {
+      const path = import.meta.env.VITE_API + "get_file";
+      axios
+        .post(
+          path,
+          { group_id: group.group_id, type: "competition_report" },
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          if (response.data.size != 0) {
+            const binarydata = [];
+            binarydata.push(response.data);
+            let blob = new Blob(binarydata, { type: "application/pdf" });
+            const url = window.URL.createObjectURL(blob);
+            window.open(url);
+          } else {
+            this.$message.warning("尚未上傳專題競賽報告");
+          }
+        });
+    },
     GetGroupInfo() {
       const vm = this;
       const path = import.meta.env.VITE_API + "GetGroupInfo_Pro";
@@ -107,25 +151,21 @@ export default {
           vm.GroupList = response.data.res;
         });
     },
-    lastchangeFromInput(event,name) {
-      let res={
-        score_type:'last_score',
-        [name]:event.target.value
-      }
-      this.groupAns = Object.assign(this.groupAns, res);
-    },
-    nextchangeFromInput(event,name) {
-      let res={
-        score_type:'next_score',
-        [name]:event.target.value
-      }
+    nextchangeFromInput(event, name) {
+      let res = {
+        score_type: "next_score",
+        [name]:
+          event.target.value.length < 2
+            ? "0" + event.target.value
+            : event.target.value,
+      };
       this.groupAns = Object.assign(this.groupAns, res);
     },
     backToLastPage() {
       this.$emit("backToLastPage");
     },
     returnScore(groupinfo) {
-      console.log(this.groupAns)
+      console.log(this.groupAns);
       const path = import.meta.env.VITE_API + "set_score";
       axios
         .post(path, {
@@ -142,53 +182,55 @@ export default {
         });
     },
   },
-  created(){
-    this.GetGroupInfo()
-  }
+  created() {
+    this.GetGroupInfo();
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @media screen {
-  .member-name{
+  .download-bt {
+    position: relative;
+    margin-top: 3%;
+    left: -16%;
+  }
+  .member-name {
     display: none;
   }
-  .name{
-    display:none
+  .name {
+    display: none;
   }
-  .word-mb{
-    display:none;
+  .word-mb {
+    display: none;
   }
-  .member-area{
+  .member-area {
     display: block;
     position: relative;
     margin-top: 0%;
   }
-  .card-side-components{
+  .card-side-components {
     position: relative;
     text-align: left;
-    top:20%;
-    height:20%;
-  }
-  .lastside-score {
-    position: relative;
-    margin-left: 20%;
-    margin-top: 10%;
+    top: 20%;
+    height: 20%;
   }
   .nextside-score {
     position: relative;
-    margin-left: 15%;
+    margin-left: 22.5%;
     top: 15%;
+    font-size: medium;
+    font-weight: 500;
   }
   .word {
     position: relative;
     font-size: medium;
     font-weight: 500;
     padding-right: 0%;
-    margin-left: 10%;
-    width:40%;
+    margin-left: 13%;
+    width: 40%;
     top: 20%;
-    left:0%;
+    left: 0%;
   }
   .card-side {
     position: absolute;
@@ -201,13 +243,6 @@ export default {
   }
   .lastpage-bt {
     display: none;
-  }
-  .menu {
-    position: absolute;
-    right: 50px;
-    width: 70px;
-    height: 40px;
-    top: 2%;
   }
   .comment-box {
     position: relative;
@@ -239,12 +274,8 @@ export default {
     left: 17%;
     width: 60%;
     border-radius: 20px;
-  }
-  .lastsend-bt {
-    position: relative;
-    border-radius: 20px;
-    left: 15%;
-    margin-top: 10%;
+    padding-top: 0%;
+    padding-bottom: 1%;
   }
   .nextsend-bt {
     position: relative;
@@ -262,7 +293,7 @@ export default {
   .memberscore-box {
     position: relative;
     text-align: center;
-    top:5%;
+    top: 5%;
     margin-top: 0%;
     margin-left: 40%;
     width: 20%;
@@ -270,122 +301,112 @@ export default {
 }
 
 @media screen and (max-width: 480px) {
-  .member-area{
+  .download-bt {
+    position: relative;
+    left: 0%;
+  }
+  .member-area {
     display: block;
     position: relative;
     margin-top: 0%;
   }
-  .nextside-score{
+  .nextside-score {
     display: block;
     position: relative;
     margin-top: 0%;
-    margin-left:15%;
-    top:0%;
-    left:30%;
+    margin-left: 15%;
+    top: 0%;
+    left: 30%;
   }
-  .comment-box{
+  .comment-box {
     position: relative;
-    width:70%;
-    height:30px;
-    left:0%;
+    width: 70%;
+    height: 30px;
+    left: 0%;
     margin-bottom: 5%;
   }
   .scrollbar {
     display: block;
     height: 90%;
   }
-  .card-side-components{
+  .card-side-components {
     display: block;
     position: relative;
   }
-  .nextsend-bt{
+  .nextsend-bt {
     display: block;
     position: relative;
-    margin-top:5%;
-    left:-8%;
+    margin-top: 5%;
+    left: -8%;
   }
-  .lastsend-bt{
-    display: block;
-    position: relative;
-    margin-top:3%;
-    left:-10%;
-  }
-  .memberscore-box{
+  .memberscore-box {
     display: block;
     position: absolute;
-    margin-left:35%;
+    margin-left: 35%;
   }
-  .leaderscore-box{
+  .leaderscore-box {
     display: block;
     position: absolute;
-    top:0%;
+    top: 0%;
     margin-top: 0%;
     margin-left: 35%;
   }
-  .member-name{
+  .member-name {
     display: block;
     position: absolute;
-    left:-40%;
+    left: -40%;
   }
   .name {
     display: block;
     position: absolute;
     left: 10%;
   }
-  .lastside-score{
-    display: block;
-    position: relative;
-    margin-top: 0%;
-    margin-left:15%;
-    top:0%;
-    left:30%;
-  }
-  .card-side-components{
+  .card-side-components {
     position: relative;
     text-align: left;
-    top:20%;
-    height:20%;
+    top: 20%;
+    height: 20%;
   }
-  .word-mb{
+  .word-mb {
     display: block;
     position: absolute;
     font-size: medium;
     font-weight: 500;
     left: 10%;
   }
-  .lastpage-bt{
+  .lastpage-bt {
     display: block;
     position: absolute;
-    font-size: 5px;
+    font-size: 15%;
     top: 2.5%;
     left: 0%;
     width: 15%;
     height: 7%;
   }
-  .word{
+  .word {
     position: relative;
     top: 0%;
     left: 22.5%;
     margin-left: 15%;
   }
-  .group-info{
+  .group-info {
     position: relative;
     margin-right: 0%;
-    left:20%;
-    width:100%;
+    left: 20%;
+    width: 100%;
   }
-  .card{
+  .card {
     position: relative;
     padding: 0%;
-    width:90%;
-    left:5%;
+    width: 90%;
+    left: 5%;
     padding-bottom: 0%;
   }
-  .card-side{
+  .card-side {
     position: relative;
     border-radius: 0px 0px 20px 20px;
-    width:100%;
-    left:0%;
+    width: 100%;
+    left: 0%;
   }
 }
 </style>

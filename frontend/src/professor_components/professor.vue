@@ -2,14 +2,14 @@
   <el-container>
     <el-aside class="function-list">
       <div class="title"><div class="title-word">功能列表</div></div>
-      <button class="function-bt" @click="status = 'groups_rating'">
-        小組評分
+      <button class="function-bt" @click="status = 'interm_report'">
+        上學期評分
       </button>
       <button class="function-bt" @click="status = 'competition_apply'">
         專題競賽申請
       </button>
-      <button class="function-bt" @click="status = 'interm_report'">
-        期中報告
+      <button class="function-bt" @click="status = 'groups_rating'">
+        下學期評分
       </button>
       <button class="function-bt" @click="status = 'allGroups'">
         歷年專題小組
@@ -19,14 +19,14 @@
       <div v-if="status === ''">
         <div class="bt-area">
           <div class="mb-word">功能列表</div>
-          <button class="mobile-bt" @click="status = 'groups_rating'">
-            小組評分
+          <button class="mobile-bt" @click="status = 'interm_report'">
+            上學期評分
           </button>
           <button class="mobile-bt" @click="status = 'competition_apply'">
             專題競賽申請
           </button>
-          <button class="mobile-bt" @click="status = 'interm_report'">
-            期中報告
+          <button class="mobile-bt" @click="status = 'groups_rating'">
+            下學期評分
           </button>
           <button class="mobile-bt" @click="status = 'allGroups'">
             歷年專題小組

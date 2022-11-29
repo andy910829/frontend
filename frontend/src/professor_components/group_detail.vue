@@ -130,7 +130,13 @@ export default {
 }
 @media screen and (max-width: 480px) {
   .lastpage-bt{
-    display: none;
+    display: block;
+    position: absolute;
+    font-size: 15%;
+    top:2.5%;
+    left:0%;
+    width:15%;
+    height:7%;
   }
   .word {
     font-size: medium;

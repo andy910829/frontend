@@ -1,5 +1,5 @@
 <template>
-  <h2>期中報告</h2>
+  <h2>上學期評分</h2>
   <button class="lastpage-bt" @click="backToLastPage">上一頁</button>
   <el-scrollbar class="scrollbar">
     <div v-for="GroupInfo in GroupList" :key="GroupInfo.group_id">
@@ -33,7 +33,7 @@
             <span class="left-word"> 修改分數 </span>
             <div class="name">{{ GroupInfo.leader.name }}</div>
             <div class="left-score">
-              {{ GroupInfo.leader.interm_score + " "
+              {{ GroupInfo.leader.last_score + " "
               }}<input
                 class="input-box"
                 @input="changeFromInput($event, GroupInfo.leader.name)"
@@ -41,7 +41,7 @@
             </div>
             <div v-for="member in GroupInfo.member" class="left-score">
               <span class="member-name">{{ member.name }}</span>
-              {{ member.interm_score }}
+              {{ member.last_score }}
               <input
                 class="input-box"
                 @input="changeFromInput($event, member.name)"
@@ -76,7 +76,8 @@ export default {
     },
     changeFromInput(event, name) {
       let res = {
-        [name]: event.target.value,
+        score_type:'last_score',
+        [name]: (event.target.value.length<2 ? "0"+event.target.value:event.target.value),
       };
       this.scoreResult = Object.assign(this.scoreResult, res);
     },
@@ -136,17 +137,18 @@ export default {
         });
     },
     intermReportScore(groupId) {
-      const path = import.meta.env.VITE_API + "interm_report_score";
+      const path = import.meta.env.VITE_API + "set_score";
       axios
         .post(path, {
           pro_name: sessionStorage.getItem("name"),
-          score: this.scoreResult,
+          res: this.scoreResult,
           group_id: groupId,
         })
         .then((response) => {
           if (response.data.res === true) {
             this.$message.success("修改成功");
             this.GetGroupInfo();
+            this.scoreResult={};
           }
         });
     },
@@ -164,7 +166,7 @@ export default {
   }
   .left-word {
     position: relative;
-    margin-left: 7.5%;
+    margin-left: 10%;
   }
   .left-score {
     position: relative;
@@ -243,7 +245,7 @@ export default {
   .lastpage-bt {
     display: block;
     position: absolute;
-    font-size: 5px;
+    font-size: 15%;
     top: 2.5%;
     left: 0%;
     width: 15%;

@@ -110,7 +110,7 @@ export default {
   .lastpage-bt{
     display: block;
     position: absolute;
-    font-size: 5px;
+    font-size: 15%;
     top:2.5%;
     left:0%;
     width:15%;
