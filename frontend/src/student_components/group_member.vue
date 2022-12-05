@@ -38,6 +38,7 @@ export default {
         .then((response) => {
           this.group_info = response.data.group_info;
           this.leaderName = this.group_info.leader.name;
+          console.log(this.group_info)
         });
     },
   },
@@ -120,16 +121,16 @@ export default {
   .function-list {
     position: absolute;
     width: 100%;
-    height: 50%;
+    height: 57%;
     top: 7%;
     background: rgba(255, 255, 255, 0.7);
   }
   .main-display {
     position: absolute;
-    top: 57%;
+    top: 64%;
     left: 0%;
     width: 100%;
-    height: 43%;
+    height: 36%;
     background: rgb(255, 255, 255, 0.7);
   }
   .display-groupinfo {

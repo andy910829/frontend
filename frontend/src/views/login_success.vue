@@ -167,6 +167,7 @@ export default {
   }
   .server-time {
     position: absolute;
+    color: black;
     top: 15%;
     left: 10%;
   }

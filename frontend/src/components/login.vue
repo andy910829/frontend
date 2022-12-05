@@ -210,6 +210,7 @@ export default {
   margin-bottom: 10%;
   justify-content: center;
   align-items: center;
+  color: black;
   background-color: rgba(255, 255, 255, 0.3);
 }
 }
