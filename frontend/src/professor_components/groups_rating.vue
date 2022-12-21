@@ -59,7 +59,7 @@
               <input
                 placeholder="分數"
                 class="leaderscore-box"
-                @input="nextchangeFromInput($event, GroupInfo.leader.name)"
+                @input="nextchangeFromInput($event, GroupInfo.leader.student_id)"
               />
               <div v-for="member in GroupInfo.member" class="member-area">
                 <span class="member-name">{{ member.name }}</span>
@@ -67,7 +67,7 @@
                 <input
                   placeholder="分數"
                   class="memberscore-box"
-                  @input="nextchangeFromInput($event, member.name)"
+                  @input="nextchangeFromInput($event, member.student_id)"
                 />
               </div>
               <el-button
@@ -191,11 +191,11 @@ export default {
           res: this.groupAns,
           pro_name: sessionStorage.getItem("name"),
           token: sessionStorage.getItem("token"),
+          act:sessionStorage.getItem('user_account')
         })
         .then((response) => {
           if (response.data.res === true) {
             this.GroupList = response.data.res2
-            console.log(response.date.res2)
             this.groupAns = {};
             this.$message.success("成績修改成功");
           }

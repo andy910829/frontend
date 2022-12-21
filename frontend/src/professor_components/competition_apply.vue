@@ -74,7 +74,7 @@ export default {
           group_id: groupInfo.group_id,
           status: this.ansStatus,
           pro_name: groupInfo.advisor,
-          token:sessionStorage.getItem("token")
+          token:sessionStorage.getItem("token"),
         })
         .then((response) => {
           if (response.data.res === "accept") {
