@@ -110,7 +110,10 @@ export default {
             let blob = new Blob(binarydata, { type: "application/pdf" });
             const url = window.URL.createObjectURL(blob);
             var pageName=group.group_id+'期中報告預覽'
-            window.open(url,pageName);
+            window.open(url);
+            setTimeout(function () {
+              newWindow.document.title = pageName;
+            }, 500);
           } else {
             this.$message.warning("尚未上傳期中報告");
           }

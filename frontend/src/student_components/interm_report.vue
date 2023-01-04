@@ -66,7 +66,7 @@ export default {
           let blob = new Blob([response.data], { type: "application/pdf" });
           let reader = new FileReader();
           let file_name = sessionStorage.getItem("group_id") + "期中報告.pdf";
-          if (response.data.size===0) {
+          if (response.data.size === 0) {
             this.$message.warning("尚未上傳期中報告");
           } else if (window.navigator.msSaveOrOpenBlob) {
             navigator.msSaveBlob(blob, file_name);
@@ -102,7 +102,10 @@ export default {
             binarydata.push(response.data);
             let blob = new Blob(binarydata, { type: "application/pdf" });
             const url = window.URL.createObjectURL(blob);
-            window.open(url,'期中報告預覽');
+            const newWindow = window.open(url);
+            setTimeout(function () {
+              newWindow.document.title = "期中報告預覽";
+            }, 500);
           } else {
             this.$message.warning("尚未上傳期中報告");
           }
@@ -137,11 +140,9 @@ export default {
       axios.post(path, this.param).then((response) => {
         if (response.data.res === true) {
           this.$message.success("上傳成功");
-        }
-        else if(response.data.res === false){
-          this.$message.error("已過繳交期限")
-        } 
-        else {
+        } else if (response.data.res === false) {
+          this.$message.error("已過繳交期限");
+        } else {
           this.$message.warning("上傳失敗");
         }
       });
