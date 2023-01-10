@@ -291,7 +291,7 @@ export default {
     text-align: center;
     width: 100%;
     height: 50px;
-    margin-top: 10%;
+    margin-top: 8%;
   }
   .group-info {
     position: relative;
@@ -322,7 +322,7 @@ export default {
     position: relative;
     border-radius: 20px;
     left: 20%;
-    margin-top: 5%;
+    margin-top: 3%;
   }
   .leaderscore-box {
     position: relative;
